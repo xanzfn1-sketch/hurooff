@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanabil – Arabic Learning for Bright Futures</title>
-    <!-- Google Fonts for crisp 4K typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -16,48 +15,35 @@
             --white: #ffffff;
             --text-main: #2b2b2b;
             --text-muted: #666666;
-            --border-color: #e2dcd4;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-color: #e5ded4;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
             background-color: var(--bg-cream);
             color: var(--text-main);
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Notification Bar */
-        .top-bar {
-            background-color: var(--primary-dark);
-            color: var(--white);
-            text-align: center;
-            font-size: 13px;
-            padding: 8px 15px;
-            font-weight: 500;
-        }
-
-        /* Header */
+        /* Top Header */
         header {
-            background-color: var(--white);
+            background: var(--white);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
         .header-container {
-            max-width: 1400px;
+            max-width: 1380px;
             margin: 0 auto;
-            padding: 15px 30px;
+            padding: 14px 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -72,20 +58,20 @@
         }
 
         .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: var(--primary);
+            font-size: 28px;
+            color: var(--primary);
+            background: rgba(12, 84, 73, 0.1);
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
-            font-size: 22px;
         }
 
         .logo-text h1 {
             font-size: 26px;
-            font-weight: 900;
+            font-weight: 800;
             color: var(--primary);
             letter-spacing: -0.5px;
             line-height: 1.1;
@@ -93,47 +79,47 @@
 
         .logo-text span {
             font-size: 11px;
-            color: var(--text-muted);
+            color: #555;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            letter-spacing: 0.2px;
         }
 
         .search-bar {
             flex: 1;
-            max-width: 500px;
+            max-width: 460px;
             position: relative;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 12px 20px 12px 45px;
+            padding: 11px 20px 11px 42px;
             border-radius: 50px;
             border: 1px solid var(--border-color);
             background: var(--bg-cream);
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
-            transition: var(--transition);
+            transition: all 0.2s;
         }
 
         .search-bar input:focus {
-            border-color: var(--primary);
             background: var(--white);
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(12, 84, 73, 0.1);
         }
 
         .search-bar i {
             position: absolute;
-            left: 18px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
+            font-size: 14px;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 24px;
         }
 
         .action-btn {
@@ -143,28 +129,21 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-main);
             position: relative;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .action-btn:hover {
-            background-color: rgba(12, 84, 73, 0.05);
-            color: var(--primary);
+            padding: 6px;
         }
 
         .action-btn i {
-            font-size: 18px;
+            font-size: 17px;
         }
 
         .badge-count {
             position: absolute;
-            top: 2px;
-            right: 4px;
+            top: 0;
+            right: 0;
             background: var(--accent);
             color: var(--white);
             font-size: 10px;
@@ -180,48 +159,740 @@
         /* Navigation Bar */
         nav {
             background-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(12, 84, 73, 0.15);
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 1380px;
             margin: 0 auto;
             padding: 0 30px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            overflow-x: auto;
+            gap: 4px;
         }
 
         .nav-link {
             color: var(--white);
             text-decoration: none;
-            padding: 14px 18px;
-            font-size: 14px;
+            padding: 13px 18px;
+            font-size: 13px;
             font-weight: 600;
-            white-space: nowrap;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
         }
 
         .nav-link:hover, .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-bottom-color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.12);
         }
 
         /* Hero Section */
         .hero {
-            max-width: 1400px;
-            margin: 30px auto;
+            max-width: 1380px;
+            margin: 25px auto;
             padding: 0 30px;
         }
 
         .hero-banner {
-            background: linear-gradient(135deg, #f3efe6 0% /* soft cream */, #e8dfd1 100%);
-            border-radius: 24px;
-            padding: 60px;
+            background: linear-gradient(135deg, #f3efe6 0%, #e6dccb 100%);
+            border-radius: 20px;
+            padding: 50px 60px;
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: 1.15fr 1fr;
             align-items: center;
             gap: 40px;
-            position: relative
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero-content h2 {
+            font-size: 46px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.12;
+            margin-bottom: 16px;
+        }
+
+        .hero-content p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 28px;
+            max-width: 520px;
+        }
+
+        .hero-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .feature-item i {
+            color: var(--primary);
+            background: var(--white);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 11px;
+        }
+
+        .hero-btn {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(12, 84, 73, 0.2);
+            transition: all 0.2s;
+        }
+
+        .hero-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .hero-images {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-book {
+            width: 215px;
+            height: 300px;
+            background: linear-gradient(135deg, #0c5449 0%, #073831 100%);
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .hero-book.book-2 {
+            background: linear-gradient(135deg, #d4a373 0%, #8c5825 100%);
+            margin-left: -35px;
+            z-index: 2;
+        }
+
+        .qr-badge {
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            background: var(--white);
+            padding: 12px 18px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            z-index: 10;
+        }
+
+        /* 4 Feature Banners */
+        .categories-grid {
+            max-width: 1380px;
+            margin: 35px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            background: var(--white);
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(12, 84, 73, 0.06);
+        }
+
+        .category-info h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .category-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .category-icon {
+            font-size: 22px;
+            color: var(--primary);
+            background: rgba(12, 84, 73, 0.08);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Popular Products */
+        .products-section {
+            max-width: 1380px;
+            margin: 45px auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .view-all-link {
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-all-link:hover {
+            color: var(--primary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: var(--primary);
+        }
+
+        .product-image-container {
+            height: 220px;
+            background: #f4efe6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            padding: 15px;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #d9534f;
+            color: var(--white);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 50px;
+            text-transform: uppercase;
+        }
+
+        .product-badge.special {
+            background: var(--primary);
+        }
+
+        .simulated-mini-book {
+            width: 120px;
+            height: 170px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .product-details {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            cursor: pointer;
+            line-height: 1.4;
+            height: 38px;
+            overflow: hidden;
+        }
+
+        .product-title:hover {
+            color: var(--primary);
+        }
+
+        .product-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .price-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .old-price {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+
+        .add-to-basket-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .add-to-basket-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Trust Footer */
+        .features-footer {
+            max-width: 1380px;
+            margin: 50px auto;
+            padding: 35px 30px;
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .footer-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-feature-item i {
+            font-size: 26px;
+            color: var(--primary);
+            background: rgba(12, 84, 73, 0.08);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .footer-feature-text h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+        }
+
+        .footer-feature-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hero-banner { grid-template-columns: 1fr; padding: 30px 20px; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-footer { grid-template-columns: 1fr; }
+            .search-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Sanabil سنابل</h1>
+                    <span>Arabic Learning for Bright Futures</span>
+                </div>
+            </a>
+
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search books, worksheets, resources...">
+            </div>
+
+            <div class="header-actions">
+                <button class="action-btn">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </button>
+                <button class="action-btn">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                    <span class="badge-count">0</span>
+                </button>
+                <button class="action-btn">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span>Basket</span>
+                    <span class="badge-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link">Arabic Books <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+            <a href="#" class="nav-link">Worksheets <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+            <a href="#" class="nav-link">Learning Packs <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+            <a href="#" class="nav-link">Free Resources</a>
+            <a href="#" class="nav-link">Schools & Tutors</a>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-banner">
+            <div class="hero-content">
+                <span class="hero-tag">ARABIC LEARNING SERIES</span>
+                <h2>Learn Arabic with Confidence</h2>
+                <p>Engaging books, interactive lessons and printable resources for children, families and schools.</p>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check"></i> Step-by-step learning
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check"></i> QR video lessons
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check"></i> Suitable for home & classroom
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check"></i> For beginners and Arabic speakers
+                    </div>
+                </div>
+                <a href="#products" class="hero-btn">
+                    <span>Shop Sanabil Books</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="hero-images">
+                <div class="hero-book">
+                    <div style="font-size: 22px; font-weight: 800; margin-bottom: 5px;">سنابل</div>
+                    <div style="font-size: 16px; font-weight: 700;">Sunbula 1</div>
+                    <div style="font-size: 10px; opacity: 0.8; margin-top: 10px;">Arabic Letters for Beginners</div>
+                </div>
+                <div class="hero-book book-2">
+                    <div style="font-size: 22px; font-weight: 800; margin-bottom: 5px;">سنابل</div>
+                    <div style="font-size: 16px; font-weight: 700;">Sunbula 2</div>
+                    <div style="font-size: 10px; opacity: 0.8; margin-top: 10px;">Reading & Vocabulary</div>
+                </div>
+                <div class="qr-badge">
+                    <i class="fa-solid fa-qrcode" style="font-size: 18px;"></i>
+                    <div>
+                        <div style="font-size: 10px; color: #666;">Interactive</div>
+                        <div style="font-size: 12px; font-weight: 800;">QR Lessons Included</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4 Feature Cards -->
+    <div class="categories-grid">
+        <a href="#" class="category-card">
+            <div class="category-info">
+                <h3>Arabic Books</h3>
+                <p>Structured learning with QR video lessons.</p>
+            </div>
+            <div class="category-icon"><i class="fa-solid fa-book"></i></div>
+        </a>
+        <a href="#" class="category-card">
+            <div class="category-info">
+                <h3>Worksheets & Activities</h3>
+                <p>Printable resources for extra practice.</p>
+            </div>
+            <div class="category-icon"><i class="fa-solid fa-file-lines"></i></div>
+        </a>
+        <a href="#" class="category-card">
+            <div class="category-info">
+                <h3>Learning Packs</h3>
+                <p>Book bundles and complete learning kits.</p>
+            </div>
+            <div class="category-icon"><i class="fa-solid fa-gift"></i></div>
+        </a>
+        <a href="#" class="category-card">
+            <div class="category-info">
+                <h3>Schools & Tutors</h3>
+                <p>Bulk orders and classroom resources.</p>
+            </div>
+            <div class="category-icon"><i class="fa-solid fa-school"></i></div>
+        </a>
+    </div>
+
+    <!-- Popular Products -->
+    <section class="products-section" id="products">
+        <div class="section-header">
+            <h2>Popular Products</h2>
+            <a href="#" class="view-all-link">View All Products <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="simulated-mini-book">
+                        <div style="font-size: 18px; margin-bottom: 4px;">سنابل</div>
+                        <div>Sunbula 1</div>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">Sanabil Book 1</h3>
+                    <div class="product-footer">
+                        <div class="product-price">£13.99</div>
+                        <button class="add-to-basket-btn"><i class="fa-solid fa-basket-shopping"></i> Add to basket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="simulated-mini-book" style="background: linear-gradient(135deg, #073831 0%, #0c5449 100%);">
+                        <div style="font-size: 18px; margin-bottom: 4px;">سنابل</div>
+                        <div>Sunbula 2</div>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">Sanabil Book 2</h3>
+                    <div class="product-footer">
+                        <div class="product-price">£13.99</div>
+                        <button class="add-to-basket-btn"><i class="fa-solid fa-basket-shopping"></i> Add to basket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <span class="product-badge special">Special Offer</span>
+                    <div style="display: flex; gap: 4px;">
+                        <div class="simulated-mini-book" style="width: 75px; height: 110px; font-size: 10px;">Book 1</div>
+                        <div class="simulated-mini-book" style="width: 75px; height: 110px; font-size: 10px; background: #073831;">Book 2</div>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">Sanabil Complete Set (Book 1 + Book 2)</h3>
+                    <div class="product-footer">
+                        <div class="price-area">
+                            <span class="old-price">£32.99</span>
+                            <span class="product-price">£25.99</span>
+                        </div>
+                        <button class="add-to-basket-btn"><i class="fa-solid fa-basket-shopping"></i> Add to basket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="simulated-mini-book" style="background: #78716c; width: 100px; height: 140px;">
+                        <i class="fa-solid fa-file-pen" style="font-size: 24px;"></i>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">Arabic Alphabet Worksheet Pack</h3>
+                    <div class="product-footer">
+                        <div class="product-price">£4.99</div>
+                        <button class="add-to-basket-btn"><i class="fa-solid fa-basket-shopping"></i> Add to basket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="simulated-mini-book" style="background: #78716c; width: 100px; height: 140px;">
+                        <i class="fa-solid fa-calendar-days" style="font-size: 24px;"></i>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">30-Day Arabic Activity Pack</h3>
+                    <div class="product-footer">
+                        <div class="product-price">£9.99</div>
+                        <button class="add-to-basket-btn"><i class="fa-solid fa-basket-shopping"></i> Add to basket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="simulated-mini-book" style="background: #78716c; width: 100px; height: 140px;">
+                        <i class="fa-solid fa-clone" style="font-size: 24px;"></i>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">Arabic Flashcards (Printable)</h3>
+                    <div class="product-footer">
+                        <div class="product-price">£3.99</div>
+                        <button class="add-to-basket-btn"><i class="fa-solid fa-basket-shopping"></i> Add to basket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Footer -->
+    <div class="features-footer">
+        <div class="footer-feature-item">
+            <i class="fa-solid fa-truck-fast"></i>
+            <div class="footer-feature-text">
+                <h4>Fast & Reliable Delivery</h4>
+                <p>UK and international options</p>
+            </div>
+        </div>
+        <div class="footer-feature-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div class="footer-feature-text">
+                <h4>Secure Payment</h4>
+                <p>Shop with confidence</p>
+            </div>
+        </div>
+        <div class="footer-feature-item">
+            <i class="fa-solid fa-heart"></i>
+            <div class="footer-feature-text">
+                <h4>Loved by Families</h4>
+                <p>Engaging and effective</p>
+            </div>
+        </div>
+        <div class="footer-feature-item">
+            <i class="fa-solid fa-award"></i>
+            <div class="footer-feature-text">
+                <h4>Trusted by Schools</h4>
+                <p>Ideal for classrooms</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
