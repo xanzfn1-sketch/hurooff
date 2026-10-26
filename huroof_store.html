@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huroof Arabic Learning Series | Official Store</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#F9F7F2',
+                        creamDark: '#F0ECE1',
+                        tealPrimary: '#0C5449',
+                        tealDark: '#083D35',
+                        tealLight: '#147A6B',
+                        goldAccent: '#D99B26',
+                        goldHover: '#B8821D',
+                        coralAccent: '#E06A55',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        arabic: ['Amiri', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Arabic legibility -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom aesthetics & realistic book preview styling */
+        body {
+            background-color: #F9F7F2;
+            font-family: 'Inter', sans-serif;
+            color: #2D3748;
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Faint Studio Watermark Effect behind books */
+        .watermark-bg {
+            background-image: radial-gradient(circle, rgba(12, 84, 73, 0.04) 0%, transparent 70%);
+        }
+
+        .book-shadow {
+            box-shadow: -12px 16px 28px -6px rgba(0, 0, 0, 0.25), -4px 6px 10px -4px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-spine-effect {
+            background: linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.2) 3%, transparent 8%);
+        }
+
+        /* Scrollbar custom styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F0ECE1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0C5449;
+            border-radius: 4px;
+        }
+
+        /* Modal transitions */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        /* Glowing Badge Animation */
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.92; transform: scale(1.03); }
+        }
+        .pulse-badge {
+            animation: pulse-subtle 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-goldAccent selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-tealDark text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex justify-center items-center gap-2">
+        <span class="bg-goldAccent text-tealDark text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Free Delivery</span>
+        <span>On orders over £30 across the UK! Standard worldwide shipping available.</span>
+    </div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- BRAND LOGO -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="w-12 h-12 bg-tealPrimary text-goldAccent rounded-xl flex items-center justify-center text-2xl font-bold shadow-md">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black tracking-tight text-tealPrimary">Huroof</span>
+                            <span class="arabic-text text-2xl font-bold text-goldAccent">حروف</span>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium tracking-wide">Arabic Learning for Bright Futures</p>
+                    </div>
+                </div>
+
+                <!-- SEARCH BAR (DESKTOP) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
+                    <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search books, topics, or lessons..." 
+                           class="w-full bg-cream rounded-full py-2.5 pl-11 pr-4 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-tealPrimary focus:bg-white transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400"></i>
+                </div>
+
+                <!-- NAV ICONS & BASKET -->
+                <div class="flex items-center gap-4 sm:gap-6">
+                    <button class="text-gray-600 hover:text-tealPrimary transition-colors relative hidden sm:block" onclick="showNotification('Wishlist saved to your session!')">
+                        <i class="fa-regular fa-heart text-xl"></i>
+                        <span id="wishlistCount" class="absolute -top-1.5 -right-2 bg-goldAccent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                    
+                    <button class="text-gray-600 hover:text-tealPrimary transition-colors hidden sm:block" onclick="showNotification('Account Login portal available soon!')">
+                        <i class="fa-regular fa-user text-xl"></i>
+                    </button>
+
+                    <!-- CART BUTTON -->
+                    <button onclick="toggleCartDrawer(true)" class="bg-tealPrimary hover:bg-tealDark text-white px-4 py-2.5 rounded-full flex items-center gap-3 shadow-md hover:shadow-lg transition-all">
+                        <div class="relative">
+                            <i class="fa-solid fa-basket-shopping text-lg text-goldAccent"></i>
+                            <span id="cartBadge" class="absolute -top-2 -right-2 bg-coralAccent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                        </div>
+                        <span class="font-semibold text-sm hidden sm:inline" id="cartTotalHeader">£0.00</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- NAVIGATION LINKS -->
+            <nav class="flex items-center gap-6 overflow-x-auto py-3 text-sm font-medium border-t border-gray-100 no-scrollbar text-gray-600">
+                <a href="#hero" class="text-tealPrimary font-bold border-b-2 border-tealPrimary pb-1 whitespace-nowrap">Home</a>
+                <a href="#books-section" class="hover:text-tealPrimary transition-colors whitespace-nowrap">Arabic Books</a>
+                <a href="#worksheets-section" class="hover:text-tealPrimary transition-colors whitespace-nowrap flex items-center gap-1.5">
+                    Worksheets <span class="bg-gray-100 text-gray-500 text-[10px] px-2 py-0.5 rounded-full uppercase">Coming Soon</span>
+                </a>
+                <a href="#packs-section" class="hover:text-tealPrimary transition-colors whitespace-nowrap flex items-center gap-1.5">
+                    Learning Packs <span class="bg-gray-100 text-gray-500 text-[10px] px-2 py-0.5 rounded-full uppercase">Coming Soon</span>
+                </a>
+                <a href="#schools" class="hover:text-tealPrimary transition-colors whitespace-nowrap">Schools & Tutors</a>
+                <a href="#about" class="hover:text-tealPrimary transition-colors whitespace-nowrap">About Huroof</a>
+                <a href="#contact" class="hover:text-tealPrimary transition-colors whitespace-nowrap">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative bg-gradient-to-b from-white via-cream to-creamDark py-12 md:py-20 overflow-hidden watermark-bg">
+            
+            <!-- BACKGROUND WATERMARK LOGO -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+                <span class="arabic-text text-[30rem] font-bold text-tealPrimary select-none">حروف</span>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- LEFT COLUMN: TEXT CONTENT -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-goldAccent/30 text-tealPrimary font-semibold text-xs sm:text-sm">
+                            <i class="fa-solid fa-star text-goldAccent"></i>
+                            <span>Trusted by over 10,000+ Students & Teachers</span>
+                        </div>
+
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
+                            Learn Arabic with <span class="text-tealPrimary underline decoration-goldAccent decoration-4">Confidence</span>
+                        </h1>
+
+                        <p class="text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            Engaging structured books, authentic lesson drills, and embedded QR video explanations designed for children, families, and classrooms worldwide.
+                        </p>
+
+                        <!-- FEATURE BULLETS -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-left max-w-xl mx-auto lg:mx-0">
+                            <div class="flex items-center gap-3 bg-white/80 p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-tealPrimary/10 text-tealPrimary flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-check text-sm font-bold"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">Step-by-step Arabic phonics</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white/80 p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-goldAccent/10 text-goldAccent flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-qrcode text-sm font-bold"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">Interactive QR Video Lessons</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white/80 p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-tealPrimary/10 text-tealPrimary flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-house-chimney text-sm font-bold"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">For Home & Classroom use</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white/80 p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-tealPrimary/10 text-tealPrimary flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-user-graduate text-sm font-bold"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">Beginners & Non-Arabic speakers</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA BUTTONS -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#books-section" class="bg-tealPrimary hover:bg-tealDark text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center gap-3">
+                                <span>Shop Books</span>
+                                <i class="fa-solid fa-arrow-right text-goldAccent"></i>
+                            </a>
+                            <button onclick="openBookPreview('book1')" class="bg-white hover:bg-cream border-2 border-tealPrimary text-tealPrimary px-7 py-3.5 rounded-full font-bold shadow-sm hover:shadow transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-eye text-goldAccent"></i>
+                                <span>Look Inside Preview</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: HIGH QUALITY DUAL BOOK MOCKUP -->
+                    <div class="lg:col-span-5 relative flex justify-center items-center">
+                        <div class="relative w-full max-w-md">
+                            
+                            <!-- STUDIO LIGHTING SHADOW BACKGROUND -->
+                            <div class="absolute -inset-4 bg-gradient-to-r from-goldAccent/20 to-tealPrimary/20 rounded-3xl filter blur-2xl opacity-70"></div>
+                            
+                            <!-- BOOK DISPLAY WRAPPER -->
+                            <div class="relative flex items-center justify-center gap-4 sm:gap-6 py-6">
+                                
+                                <!-- BOOK 1 DISPLAY -->
+                                <div onclick="openBookPreview('book1')" class="group cursor-pointer transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300 w-1/2">
+                                    <div class="bg-white rounded-r-xl rounded-l-md overflow-hidden book-shadow border-r-4 border-goldAccent relative">
+                                        <div class="h-64 sm:h-72 bg-gradient-to-br from-cream to-white p-4 flex flex-col justify-between border border-gray-200 relative">
+                                            <!-- Watermark on book cover -->
+                                            <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                                                <span class="arabic-text text-7xl font-bold text-tealPrimary">حروف</span>
+                                            </div>
+                                            <div class="text-center z-10">
+                                                <div class="text-[10px] font-bold text-tealPrimary tracking-widest uppercase mb-1">Sanaabil 1</div>
+                                                <div class="text-xl font-black text-gray-800">Huroof</div>
+                                                <div class="arabic-text text-2xl font-bold text-goldAccent my-1">حُرُوفٌ 1</div>
+                                                <div class="text-xs text-gray-500 font-medium">Book 1: Foundations</div>
+                                            </div>
+                                            <!-- Cover Art Icon -->
+                                            <div class="w-16 h-16 mx-auto bg-tealPrimary/10 rounded-full flex items-center justify-center text-tealPrimary text-3xl z-10 shadow-inner">
+                                                <i class="fa-solid fa-seedling text-goldAccent"></i>
+                                            </div>
+                                            <div class="text-center text-[10px] text-gray-500 z-10 font-semibold border-t border-gray-100 pt-2">
+                                                Saaliha Al-Shaikh
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <span class="bg-white text-tealPrimary text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-gray-200 inline-flex items-center gap-1 group-hover:bg-tealPrimary group-hover:text-white transition-colors">
+                                            <i class="fa-solid fa-magnifying-glass-plus"></i> View Book 1
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- BOOK 2 DISPLAY -->
+                                <div onclick="openBookPreview('book2')" class="group cursor-pointer transform rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300 w-1/2 mt-8 sm:mt-10">
+                                    <div class="bg-white rounded-r-xl rounded-l-md overflow-hidden book-shadow border-r-4 border-tealPrimary relative">
+                                        <div class="h-64 sm:h-72 bg-gradient-to-br from-white to-cream p-4 flex flex-col justify-between border border-gray-200 relative">
+                                            <!-- Watermark on book cover -->
+                                            <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                                                <span class="arabic-text text-7xl font-bold text-tealPrimary">حروف</span>
+                                            </div>
+                                            <div class="text-center z-10">
+                                                <div class="text-[10px] font-bold text-goldAccent tracking-widest uppercase mb-1">Sanaabil 2</div>
+                                                <div class="text-xl font-black text-gray-800">Huroof</div>
+                                                <div class="arabic-text text-2xl font-bold text-tealPrimary my-1">حُرُوفٌ 2</div>
+                                                <div class="text-xs text-gray-500 font-medium">Book 2: Advanced</div>
+                                            </div>
+                                            <!-- Cover Art Icon -->
+                                            <div class="w-16 h-16 mx-auto bg-goldAccent/10 rounded-full flex items-center justify-center text-goldAccent text-3xl z-10 shadow-inner">
+                                                <i class="fa-solid fa-book-bookmark text-tealPrimary"></i>
+                                            </div>
+                                            <div class="text-center text-[10px] text-gray-500 z-10 font-semibold border-t border-gray-100 pt-2">
+                                                Saaliha Al-Shaikh
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <span class="bg-white text-tealPrimary text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-gray-200 inline-flex items-center gap-1 group-hover:bg-tealPrimary group-hover:text-white transition-colors">
+                                            <i class="fa-solid fa-magnifying-glass-plus"></i> View Book 2
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4 HIGHLIGHTED CATEGORY BANNERS -->
+        <section class="py-12 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- BANNER 1: ARABIC BOOKS -->
+                    <div class="bg-gradient-to-br from-cream to-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-tealPrimary text-goldAccent rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Arabic Books</h3>
+                            <p class="text-sm text-gray-600 mb-4">Structured step-by-step physical learning books integrated with QR video tutorials.</p>
+                        </div>
+                        <a href="#books-section" class="text-tealPrimary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                            <span>Shop Books</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- BANNER 2: WORKSHEETS (COMING SOON) -->
+                    <div class="bg-gradient-to-br from-cream to-white p-6 rounded-2xl border border-gray-200 shadow-sm opacity-90 flex flex-col justify-between relative overflow-hidden">
+                        <span class="absolute top-3 right-3 bg-gray-200 text-gray-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Coming Soon</span>
+                        <div>
+                            <div class="w-12 h-12 bg-goldAccent/20 text-goldHover rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                                <i class="fa-solid fa-file-pen"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Worksheets & Activities</h3>
+                            <p class="text-sm text-gray-600 mb-4">Printable handwriting exercises and phonics activity downloads.</p>
+                        </div>
+                        <button onclick="showNotification('Worksheets will be available for download soon!')" class="text-gray-500 font-bold text-sm flex items-center gap-2 cursor-not-allowed">
+                            <span>View Worksheets</span>
+                            <i class="fa-solid fa-lock text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- BANNER 3: LEARNING PACKS (COMING SOON) -->
+                    <div class="bg-gradient-to-br from-cream to-white p-6 rounded-2xl border border-gray-200 shadow-sm opacity-90 flex flex-col justify-between relative overflow-hidden">
+                        <span class="absolute top-3 right-3 bg-gray-200 text-gray-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Coming Soon</span>
+                        <div>
+                            <div class="w-12 h-12 bg-coralAccent/20 text-coralAccent rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Learning Packs</h3>
+                            <p class="text-sm text-gray-600 mb-4">All-in-one educational bundles featuring books, flashcards & workbooks.</p>
+                        </div>
+                        <button onclick="showNotification('Learning bundles coming soon!')" class="text-gray-500 font-bold text-sm flex items-center gap-2 cursor-not-allowed">
+                            <span>Shop Packs</span>
+                            <i class="fa-solid fa-lock text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- BANNER 4: SCHOOLS & TUTORS -->
+                    <div class="bg-gradient-to-br from-cream to-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-tealPrimary/10 text-tealPrimary rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Schools & Tutors</h3>
+                            <p class="text-sm text-gray-600 mb-4">Bulk ordering discounts and classroom teaching guides for Islamic institutions.</p>
+                        </div>
+                        <a href="#schools" class="text-tealPrimary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                            <span>Get a Quote</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- POPULAR PRODUCTS CATALOG GRID -->
+        <section id="books-section" class="py-16 bg-cream/50 border-t border-b border-gray-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                    <div>
+                        <span class="text-tealPrimary font-bold text-sm uppercase tracking-wider">Official Curriculum</span>
+                        <h2 class="text-3xl font-black text-gray-900 mt-1">Featured Books & Resources</h2>
+                    </div>
+                    <p class="text-gray-600 text-sm max-w-md mt-2 md:mt-0">
+                        Click on any book card to open the **Interactive Sample Page Preview Gallery** based on our printed books.
+                    </p>
+                </div>
+
+                <!-- PRODUCTS GRID -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="productGrid">
+                    
+                    <!-- ITEM 1: HOOF BOOK 1 -->
+                    <div class="product-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-title="Huroof Book 1 Sanaabil 1 Sunbula">
+                        <div class="p-6 relative">
+                            <span class="absolute top-4 left-4 bg-tealPrimary text-white text-xs font-bold px-3 py-1 rounded-full">Book 1</span>
+                            
+                            <!-- COVER PREVIEW TRIGGER -->
+                            <div onclick="openBookPreview('book1')" class="cursor-pointer group my-6 text-center">
+                                <div class="w-44 h-56 mx-auto bg-gradient-to-br from-cream to-white rounded-r-lg rounded-l-sm book-shadow border-r-4 border-goldAccent p-4 flex flex-col justify-between group-hover:scale-105 transition-transform relative">
+                                    <div class="text-xs font-bold text-tealPrimary">Sanaabil 1</div>
+                                    <div class="arabic-text text-3xl font-bold text-goldAccent">حُرُوفٌ</div>
+                                    <div class="text-[10px] text-gray-500">Foundational Phonics</div>
+                                    <div class="text-[10px] text-tealPrimary font-bold bg-cream py-1 rounded border border-gray-200 flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-eye text-goldAccent"></i> Preview Inside
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">Huroof Book 1</h3>
+                            <p class="text-xs text-tealPrimary font-semibold mb-2">Sanaabil / Sunbula Level 1 • Saaliha Al-Shaikh</p>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Includes letter forms, vocalization drills (Fatha, Kasra, Damma), letter Jeem, Sheen, Noon illustrations & embedded QR videos.
+                            </p>
+                            
+                            <div class="flex items-center gap-1 text-goldAccent text-xs mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-gray-500 font-medium ml-1">(48 reviews)</span>
+                            </div>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Price</span>
+                                <span class="text-2xl font-black text-tealPrimary">£13.99</span>
+                            </div>
+                            <button onclick="addToCart('book1')" class="bg-tealPrimary hover:bg-tealDark text-white px-5 py-2.5 rounded-full font-bold text-sm shadow hover:shadow-md transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Add to Basket
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 2: HUROOF BOOK 2 -->
+                    <div class="product-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-title="Huroof Book 2 Sanaabil 2 Sunbula">
+                        <div class="p-6 relative">
+                            <span class="absolute top-4 left-4 bg-goldAccent text-tealDark text-xs font-bold px-3 py-1 rounded-full">Book 2</span>
+                            
+                            <!-- COVER PREVIEW TRIGGER -->
+                            <div onclick="openBookPreview('book2')" class="cursor-pointer group my-6 text-center">
+                                <div class="w-44 h-56 mx-auto bg-gradient-to-br from-white to-cream rounded-r-lg rounded-l-sm book-shadow border-r-4 border-tealPrimary p-4 flex flex-col justify-between group-hover:scale-105 transition-transform relative">
+                                    <div class="text-xs font-bold text-goldAccent">Sanaabil 2</div>
+                                    <div class="arabic-text text-3xl font-bold text-tealPrimary">حُرُوفٌ 2</div>
+                                    <div class="text-[10px] text-gray-500">Advanced Reading & Tajweed</div>
+                                    <div class="text-[10px] text-tealPrimary font-bold bg-cream py-1 rounded border border-gray-200 flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-eye text-goldAccent"></i> Preview Inside
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">Huroof Book 2</h3>
+                            <p class="text-xs text-tealPrimary font-semibold mb-2">Sanaabil / Sunbula Level 2 • Saaliha Al-Shaikh</p>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Master Madd Waw, complex words, Asma-ul-Husna (Names of Allah), Prophets in Qur'an, & QR scan lesson exercises.
+                            </p>
+                            
+                            <div class="flex items-center gap-1 text-goldAccent text-xs mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-gray-500 font-medium ml-1">(36 reviews)</span>
+                            </div>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Price</span>
+                                <span class="text-2xl font-black text-tealPrimary">£13.99</span>
+                            </div>
+                            <button onclick="addToCart('book2')" class="bg-tealPrimary hover:bg-tealDark text-white px-5 py-2.5 rounded-full font-bold text-sm shadow hover:shadow-md transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Add to Basket
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 3: COMPLETE SET (BOOK 1 + BOOK 2) -->
+                    <div class="product-card bg-white rounded-2xl border-2 border-goldAccent overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative" data-title="Huroof Complete Set Book 1 Book 2 Bundle">
+                        <div class="absolute top-0 right-0 bg-goldAccent text-tealDark text-xs font-black px-4 py-1.5 rounded-bl-xl shadow-sm uppercase tracking-wide">
+                            Best Value Bundle
+                        </div>
+
+                        <div class="p-6 relative">
+                            <span class="bg-coralAccent text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">Save £7.00</span>
+                            
+                            <div onclick="openBookPreview('book1')" class="cursor-pointer group my-4 flex justify-center items-center -space-x-8">
+                                <div class="w-32 h-44 bg-cream rounded-r-lg book-shadow border-r-2 border-goldAccent p-3 flex flex-col justify-between transform -rotate-6 group-hover:-rotate-12 transition-all">
+                                    <div class="text-[9px] font-bold text-tealPrimary">Book 1</div>
+                                    <div class="arabic-text text-xl font-bold text-goldAccent">حُرُوفٌ 1</div>
+                                </div>
+                                <div class="w-32 h-44 bg-white rounded-r-lg book-shadow border-r-2 border-tealPrimary p-3 flex flex-col justify-between transform rotate-6 group-hover:rotate-12 transition-all">
+                                    <div class="text-[9px] font-bold text-goldAccent">Book 2</div>
+                                    <div class="arabic-text text-xl font-bold text-tealPrimary">حُرُوفٌ 2</div>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">Huroof Complete Set (Book 1 + 2)</h3>
+                            <p class="text-xs text-tealPrimary font-semibold mb-2">Full Curriculum Bundle</p>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Includes both Book 1 and Book 2. Perfect for home teaching, Sunday schools, or full self-paced Arabic literacy.
+                            </p>
+
+                            <div class="flex items-center gap-1 text-goldAccent text-xs mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-gray-500 font-medium ml-1">(94 reviews)</span>
+                            </div>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 line-through">£27.98</span>
+                                <span class="text-2xl font-black text-tealPrimary block">£25.99</span>
+                            </div>
+                            <button onclick="addToCart('bundle')" class="bg-goldAccent hover:bg-goldHover text-tealDark font-extrabold px-6 py-2.5 rounded-full text-sm shadow hover:shadow-md transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Add Set to Basket
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 4: ARABIC ALPHABET WORKSHEETS (COMING SOON) -->
+                    <div id="worksheets-section" class="product-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm opacity-80 flex flex-col justify-between" data-title="Arabic Alphabet Worksheet Pack Printable">
+                        <div class="p-6 relative">
+                            <span class="absolute top-4 left-4 bg-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Coming Soon</span>
+                            
+                            <div class="w-full h-44 my-4 bg-cream/70 rounded-xl flex items-center justify-center text-gray-400 border border-dashed border-gray-300">
+                                <div class="text-center">
+                                    <i class="fa-solid fa-file-pdf text-4xl text-gray-400 mb-2"></i>
+                                    <p class="text-xs font-semibold text-gray-500">Printable Worksheets PDF</p>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">Arabic Alphabet Worksheets</h3>
+                            <p class="text-xs text-gray-500 font-semibold mb-2">Digital Download Pack</p>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                50+ printable practice sheets for letter tracing, handwriting drills, and sound identification.
+                            </p>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Price</span>
+                                <span class="text-2xl font-black text-gray-400">£4.99</span>
+                            </div>
+                            <button disabled class="bg-gray-200 text-gray-500 px-5 py-2.5 rounded-full font-bold text-sm cursor-not-allowed flex items-center gap-2">
+                                <i class="fa-solid fa-clock"></i> Coming Soon
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 5: 30-DAY ACTIVITY PACK (COMING SOON) -->
+                    <div id="packs-section" class="product-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm opacity-80 flex flex-col justify-between" data-title="30-Day Arabic Activity Pack">
+                        <div class="p-6 relative">
+                            <span class="absolute top-4 left-4 bg-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Coming Soon</span>
+                            
+                            <div class="w-full h-44 my-4 bg-cream/70 rounded-xl flex items-center justify-center text-gray-400 border border-dashed border-gray-300">
+                                <div class="text-center">
+                                    <i class="fa-solid fa-puzzle-piece text-4xl text-gray-400 mb-2"></i>
+                                    <p class="text-xs font-semibold text-gray-500">Activity & Game Pack</p>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">30-Day Arabic Activity Pack</h3>
+                            <p class="text-xs text-gray-500 font-semibold mb-2">Interactive Challenge</p>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Daily Arabic learning games, matching cards, and puzzle sheets designed for young learners.
+                            </p>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Price</span>
+                                <span class="text-2xl font-black text-gray-400">£9.99</span>
+                            </div>
+                            <button disabled class="bg-gray-200 text-gray-500 px-5 py-2.5 rounded-full font-bold text-sm cursor-not-allowed flex items-center gap-2">
+                                <i class="fa-solid fa-clock"></i> Coming Soon
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 6: FLASHCARDS (COMING SOON) -->
+                    <div class="product-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm opacity-80 flex flex-col justify-between" data-title="Arabic Flashcards Printable">
+                        <div class="p-6 relative">
+                            <span class="absolute top-4 left-4 bg-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Coming Soon</span>
+                            
+                            <div class="w-full h-44 my-4 bg-cream/70 rounded-xl flex items-center justify-center text-gray-400 border border-dashed border-gray-300">
+                                <div class="text-center">
+                                    <i class="fa-solid fa-layer-group text-4xl text-gray-400 mb-2"></i>
+                                    <p class="text-xs font-semibold text-gray-500">Phonics Flashcard Deck</p>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">Arabic Letter Flashcards</h3>
+                            <p class="text-xs text-gray-500 font-semibold mb-2">Vocabulary & Letters</p>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Full alphabet set with illustrations (Carrot/Jazar, Beetroot/Shamandar, Palm Tree/Nakhla) for quick memory drills.
+                            </p>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Price</span>
+                                <span class="text-2xl font-black text-gray-400">£3.99</span>
+                            </div>
+                            <button disabled class="bg-gray-200 text-gray-500 px-5 py-2.5 rounded-full font-bold text-sm cursor-not-allowed flex items-center gap-2">
+                                <i class="fa-solid fa-clock"></i> Coming Soon
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SCHOOLS & TUTORS SECTION -->
+        <section id="schools" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gradient-to-br from-tealPrimary to-tealDark rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+                    
+                    <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                        <span class="arabic-text text-9xl font-bold">حروف</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                        <div class="lg:col-span-8 space-y-4">
+                            <span class="bg-goldAccent text-tealDark text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Institutional Support</span>
+                            <h2 class="text-3xl sm:text-4xl font-black">Teaching Huroof at your School or Madrasah?</h2>
+                            <p class="text-cream text-base max-w-2xl leading-relaxed">
+                                We offer bulk institutional discounts for Islamic schools, madrasahs, home education cooperatives, and independent tutors across the UK and internationally.
+                            </p>
+                            <div class="flex flex-wrap gap-6 text-sm text-cream pt-2">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-goldAccent"></i>
+                                    <span>20%+ Bulk Order Savings</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-goldAccent"></i>
+                                    <span>Teacher Manuals & Answer Guides</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-goldAccent"></i>
+                                    <span>Custom Invoicing for Institutions</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 text-center lg:text-right">
+                            <button onclick="showNotification('Bulk Order Inquiry Form will open! Contacting sales team...')" class="bg-goldAccent hover:bg-goldHover text-tealDark font-extrabold px-8 py-4 rounded-full text-base shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                                Request Bulk Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="py-16 bg-cream border-t border-gray-200">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+                <span class="text-tealPrimary font-bold text-xs uppercase tracking-widest">Our Methodology</span>
+                <h2 class="text-3xl font-black text-gray-900">About Huroof (حروف) Arabic Series</h2>
+                <p class="text-gray-700 leading-relaxed text-base max-w-3xl mx-auto">
+                    Designed by experienced educator **Saaliha Al-Shaikh**, the Huroof Arabic Learning Series (Sanaabil / Sunbula 1 & 2) bridges traditional phonics with modern interactive video guidance. Every lesson incorporates clear Arabic calligraphic typography, vowel color coding, handwriting guidelines, and direct QR codes linking to step-by-step video lessons.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TRUST BADGES FOOTER BAR -->
+    <div class="bg-creamDark border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div class="space-y-1">
+                    <i class="fa-solid fa-truck-fast text-2xl text-tealPrimary"></i>
+                    <h4 class="text-sm font-bold text-gray-800">Fast UK Delivery</h4>
+                    <p class="text-xs text-gray-500">Dispatched within 24h</p>
+                </div>
+                <div class="space-y-1">
+                    <i class="fa-solid fa-shield-halved text-2xl text-tealPrimary"></i>
+                    <h4 class="text-sm font-bold text-gray-800">Secure Payments</h4>
+                    <p class="text-xs text-gray-500">100% Encrypted Checkout</p>
+                </div>
+                <div class="space-y-1">
+                    <i class="fa-solid fa-face-smile text-2xl text-tealPrimary"></i>
+                    <h4 class="text-sm font-bold text-gray-800">Loved by Families</h4>
+                    <p class="text-xs text-gray-500">4.9/5 Star Ratings</p>
+                </div>
+                <div class="space-y-1">
+                    <i class="fa-solid fa-school text-2xl text-tealPrimary"></i>
+                    <h4 class="text-sm font-bold text-gray-800">Trusted by Schools</h4>
+                    <p class="text-xs text-gray-500">Used in 100+ Madrasahs</p>
+                </div>
+                <div class="space-y-1 col-span-2 md:col-span-1">
+                    <i class="fa-solid fa-award text-2xl text-tealPrimary"></i>
+                    <h4 class="text-sm font-bold text-gray-800">High Quality Print</h4>
+                    <p class="text-xs text-gray-500">Durable paper & clear layout</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN FOOTER -->
+    <footer id="contact" class="bg-tealDark text-white py-12 border-t border-tealPrimary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl font-black text-white">Huroof</span>
+                        <span class="arabic-text text-2xl font-bold text-goldAccent">حروف</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Dedicated to providing clear, accessible, and structured Arabic learning materials for children and adults worldwide.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-goldAccent uppercase mb-3 tracking-wider">Quick Links</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#hero" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#books-section" class="hover:text-white transition-colors">Huroof Book 1</a></li>
+                        <li><a href="#books-section" class="hover:text-white transition-colors">Huroof Book 2</a></li>
+                        <li><a href="#schools" class="hover:text-white transition-colors">School Discounts</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-goldAccent uppercase mb-3 tracking-wider">Customer Care</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#" onclick="showNotification('Shipping & Delivery info page')" class="hover:text-white">Shipping & Delivery</a></li>
+                        <li><a href="#" onclick="showNotification('Returns Policy page')" class="hover:text-white">Returns & Refunds</a></li>
+                        <li><a href="#" onclick="showNotification('FAQ Section')" class="hover:text-white">Frequently Asked Questions</a></li>
+                        <li><a href="#" onclick="showNotification('Terms & Conditions')" class="hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-goldAccent uppercase mb-3 tracking-wider">Newsletter</h4>
+                    <p class="text-xs text-gray-300 mb-3">Subscribe for free printable Arabic activity sheets!</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Your email..." class="bg-tealPrimary text-white text-xs px-3 py-2 rounded-lg border border-tealLight focus:outline-none w-full">
+                        <button onclick="showNotification('Subscribed successfully!')" class="bg-goldAccent text-tealDark font-bold px-3 py-2 rounded-lg text-xs hover:bg-goldHover">Join</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-tealPrimary/50 text-center text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Huroof Arabic Learning Series. All rights reserved.</p>
+                <div class="flex gap-4 text-base text-gray-300">
+                    <i class="fa-brands fa-facebook hover:text-white cursor-pointer"></i>
+                    <i class="fa-brands fa-instagram hover:text-white cursor-pointer"></i>
+                    <i class="fa-brands fa-youtube hover:text-white cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART SLIDE-OUT DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-opacity duration-300 opacity-0">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm pointer-events-auto" onclick="toggleCartDrawer(false)"></div>
+        
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10 pointer-events-auto">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
+                
+                <!-- CART HEADER -->
+                <div class="p-6 bg-tealPrimary text-white flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-basket-shopping text-xl text-goldAccent"></i>
+                        <h3 class="text-lg font-bold">Your Shopping Basket</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer(false)" class="text-gray-300 hover:text-white text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- CART ITEMS CONTAINER -->
+                <div id="cartItemsContainer" class="p-6 flex-grow overflow-y-auto space-y-4">
+                    <!-- Dynamic cart items will render here -->
+                </div>
+
+                <!-- CART FOOTER & CHECKOUT -->
+                <div class="p-6 bg-cream border-t border-gray-200 space-y-4">
+                    <!-- FREE SHIPPING PROGRESS BAR -->
+                    <div id="shippingProgressContainer" class="text-xs text-gray-600 space-y-1">
+                        <div class="flex justify-between font-semibold" id="shippingText">
+                            <span>Free Shipping Progress</span>
+                            <span>Add £30.00 more</span>
+                        </div>
+                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                            <div id="shippingBar" class="bg-tealPrimary h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between text-lg font-black text-gray-900 border-t pt-3">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal" class="text-tealPrimary">£0.00</span>
+                    </div>
+
+                    <button onclick="checkout()" class="w-full bg-tealPrimary hover:bg-tealDark text-white py-3.5 rounded-full font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                        <span>Proceed to Checkout</span>
+                        <i class="fa-solid fa-lock text-goldAccent text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ENHANCED INTERACTIVE BOOK PREVIEW MODAL -->
+    <div id="bookPreviewModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md hidden">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl modal-enter-active">
+            
+            <!-- MODAL HEADER -->
+            <div class="bg-tealPrimary text-white px-6 py-4 flex items-center justify-between border-b border-tealDark">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-book-open text-goldAccent text-xl"></i>
+                    <div>
+                        <h3 id="modalBookTitle" class="text-lg font-bold">Huroof Book 1 Sample Preview</h3>
+                        <p class="text-xs text-cream/80">Authentic lesson pages from physical book</p>
+                    </div>
+                </div>
+                <button onclick="closeBookPreview()" class="text-gray-300 hover:text-white text-2xl font-bold px-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- MODAL BODY WITH PAGE VIEWER -->
+            <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-cream/30 flex flex-col items-center">
+                
+                <!-- PAGE NAVIGATION CONTROLS -->
+                <div class="flex items-center justify-between w-full max-w-md mb-4 bg-white p-2 rounded-full border border-gray-200 shadow-sm">
+                    <button onclick="prevPage()" class="w-9 h-9 rounded-full bg-cream hover:bg-tealPrimary hover:text-white text-tealPrimary flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span id="pageIndicator" class="text-xs font-bold text-gray-700">Page 1 of 6</span>
+                    <button onclick="nextPage()" class="w-9 h-9 rounded-full bg-cream hover:bg-tealPrimary hover:text-white text-tealPrimary flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- PAGE DISPLAY CANVAS CONTAINER -->
+                <div class="w-full max-w-2xl bg-white border border-gray-200 rounded-2xl p-4 sm:p-8 shadow-md min-h-[420px] flex flex-col justify-between relative overflow-hidden" id="pageDisplayArea">
+                    <!-- Rendered SVG / Canvas Page content dynamically injected here -->
+                </div>
+
+                <!-- QR CODE LESSON FEATURE HIGHLIGHT BANNER -->
+                <div class="mt-4 max-w-2xl w-full bg-tealPrimary/5 border border-tealPrimary/20 rounded-xl p-3 flex items-center gap-3 text-xs text-tealDark">
+                    <div class="w-8 h-8 rounded-lg bg-tealPrimary text-white flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-qrcode text-base text-goldAccent"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold block">Interactive QR Video Feature:</span>
+                        <span>Students scan the dinosaur-marked QR codes directly on the book page to watch video pronunciation lessons!</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODAL FOOTER -->
+            <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="text-xs text-gray-500 font-medium">
+                    <i class="fa-solid fa-circle-info text-tealPrimary mr-1"></i> High-definition print sample
+                </div>
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <button onclick="closeBookPreview()" class="px-5 py-2.5 rounded-full text-xs font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 flex-1 sm:flex-initial">
+                        Close Preview
+                    </button>
+                    <button id="modalAddButton" onclick="addToCartFromModal()" class="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-tealPrimary hover:bg-tealDark flex-1 sm:flex-initial shadow flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cart-plus text-goldAccent"></i> Add This Book to Basket
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-tealDark text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-goldAccent text-lg" id="toastIcon"></i>
+        <span id="toastMessage" class="text-xs font-semibold">Item added to basket!</span>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // STORE STATE
+        let cart = [];
+        let currentBookPreview = 'book1';
+        let currentPageIndex = 0;
+
+        // AUTHENTIC PAGE PREVIEWS DATA BASED ON UPLOADED PHOTOS
+        const bookPreviews = {
+            book1: [
+                {
+                    title: "Front Cover: Huroof Book 1",
+                    subtitle: "Sanaabil 1 • Saaliha Al-Shaikh",
+                    render: `
+                        <div class="text-center h-full flex flex-col justify-between py-4">
+                            <div class="border-2 border-tealPrimary/20 p-6 rounded-2xl bg-cream/40">
+                                <span class="text-xs font-bold text-tealPrimary tracking-widest uppercase">Sanaabil 1</span>
+                                <h2 class="text-4xl font-black text-gray-900 mt-2">Huroof</h2>
+                                <h1 class="arabic-text text-5xl font-bold text-goldAccent my-3">حُرُوفٌ 1</h1>
+                                <p class="text-xs text-gray-600">Arabic Learning for Beginners</p>
+                            </div>
+                            <div class="my-6">
+                                <div class="w-24 h-24 mx-auto bg-tealPrimary text-goldAccent rounded-full flex items-center justify-center text-4xl shadow-inner">
+                                    <i class="fa-solid fa-seedling"></i>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 pt-3 text-xs text-gray-500 font-semibold">
+                                Author: Saaliha Al-Shaikh
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Lesson: Letter Jeem (ج)",
+                    subtitle: "Vocabulary: Jazar (Carrot) - Page 14",
+                    render: `
+                        <div class="h-full flex flex-col justify-between">
+                            <div class="flex justify-between items-center border-b pb-2 text-xs text-gray-500">
+                                <span>Lesson 3 • الدرس الثالث</span>
+                                <span class="font-bold text-tealPrimary">Page 14</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 my-4 items-center">
+                                <div class="text-center p-4 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-6xl font-bold text-tealPrimary">جَ</span>
+                                    <p class="text-xs font-bold text-gray-700 mt-2">Ja - Fatha</p>
+                                </div>
+                                <div class="text-center p-4 bg-white rounded-xl border border-goldAccent/40">
+                                    <div class="text-3xl text-orange-500 mb-1"><i class="fa-solid fa-carrot"></i></div>
+                                    <span class="arabic-text text-2xl font-bold text-gray-800">جَزَرٌ</span>
+                                    <p class="text-xs text-gray-500 font-medium">Jazar (Carrot)</p>
+                                </div>
+                            </div>
+                            <!-- Handwriting Practice Lines from photos -->
+                            <div class="space-y-3 bg-gray-50 p-4 rounded-xl border border-dashed border-gray-300">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Handwriting & Tracing Grid</span>
+                                <div class="flex justify-around border-b border-red-300 pb-2 text-2xl arabic-text text-gray-400">
+                                    <span>جَ</span> <span>ـجَـ</span> <span>ـج</span> <span>ج</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Lesson: Letter Sheen (ش)",
+                    subtitle: "Vocabulary: Shamandar (Beetroot) - Page 28",
+                    render: `
+                        <div class="h-full flex flex-col justify-between">
+                            <div class="flex justify-between items-center border-b pb-2 text-xs text-gray-500">
+                                <span>Lesson 7 • الدرس السابع</span>
+                                <span class="font-bold text-tealPrimary">Page 28</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 my-4 items-center">
+                                <div class="text-center p-4 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-6xl font-bold text-coralAccent">شَ</span>
+                                    <p class="text-xs font-bold text-gray-700 mt-2">Sha - Fatha</p>
+                                </div>
+                                <div class="text-center p-4 bg-white rounded-xl border border-goldAccent/40">
+                                    <div class="text-3xl text-purple-700 mb-1"><i class="fa-solid fa-apple-whole"></i></div>
+                                    <span class="arabic-text text-2xl font-bold text-gray-800">شَمَنـْدَرٌ</span>
+                                    <p class="text-xs text-gray-500 font-medium">Shamandar (Beetroot)</p>
+                                </div>
+                            </div>
+                            <!-- QR Code Scan Feature embedded -->
+                            <div class="bg-red-50 p-3 rounded-xl border border-red-200 flex items-center gap-3">
+                                <div class="w-12 h-12 bg-white border border-red-300 rounded flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-qrcode text-2xl text-gray-800"></i>
+                                </div>
+                                <div class="text-[11px] text-red-900">
+                                    <span class="font-bold block">Scan QR for Audio Lesson:</span>
+                                    <span>Listen to teacher Saaliha pronounce letter Sheen forms.</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Reading Practice: Fatha & Kasra Exercises",
+                    subtitle: "Tadribaat (تدريبات) - Page 37 & 38",
+                    render: `
+                        <div class="h-full flex flex-col justify-between">
+                            <div class="text-center border-b pb-2">
+                                <h4 class="arabic-text text-2xl font-bold text-tealPrimary">تَدْرِيبَاتٌ • Exercise</h4>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center my-4 arabic-text text-xl">
+                                <div class="p-2 bg-cream rounded border border-gray-200">فَنَظَرَ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">فَجَزَاءُ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">فَنَزَلَ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">قَتَرَةٌ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">كُتُبٌ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">كِتَابٌ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">لَعِبَ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">مَرَضٌ</div>
+                                <div class="p-2 bg-cream rounded border border-gray-200">نَجَسٌ</div>
+                            </div>
+                            <div class="bg-creamDark p-3 rounded-xl text-xs text-gray-600 text-center">
+                                Practice 3-letter words with vowel diacritics.
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            book2: [
+                {
+                    title: "Front Cover: Huroof Book 2",
+                    subtitle: "Sanaabil 2 • Saaliha Al-Shaikh",
+                    render: `
+                        <div class="text-center h-full flex flex-col justify-between py-4">
+                            <div class="border-2 border-goldAccent/30 p-6 rounded-2xl bg-cream/40">
+                                <span class="text-xs font-bold text-goldAccent tracking-widest uppercase">Sanaabil 2</span>
+                                <h2 class="text-4xl font-black text-gray-900 mt-2">Huroof</h2>
+                                <h1 class="arabic-text text-5xl font-bold text-tealPrimary my-3">حُرُوفٌ 2</h1>
+                                <p class="text-xs text-gray-600">Advanced Reading & Quranic Phonics</p>
+                            </div>
+                            <div class="my-6">
+                                <div class="w-24 h-24 mx-auto bg-goldAccent text-tealDark rounded-full flex items-center justify-center text-4xl shadow-inner">
+                                    <i class="fa-solid fa-book-bookmark"></i>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 pt-3 text-xs text-gray-500 font-semibold">
+                                Author: Saaliha Al-Shaikh
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Lesson: Madd Waw (المد الواوي)",
+                    subtitle: "Second: The Stretching Waw - Page 63 & 64",
+                    render: `
+                        <div class="h-full flex flex-col justify-between">
+                            <div class="text-center border-b pb-2">
+                                <h4 class="arabic-text text-2xl font-bold text-coralAccent">ثانياً: (A) المد الواوي</h4>
+                                <p class="text-xs text-gray-500">Second: The Stretching Waw (ـُ و)</p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3 text-center my-4">
+                                <div class="p-3 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-2xl font-bold text-tealPrimary block">أُ و</span>
+                                    <span class="text-xs text-gray-500">Oo Oo~</span>
+                                </div>
+                                <div class="p-3 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-2xl font-bold text-tealPrimary block">بُ و</span>
+                                    <span class="text-xs text-gray-500">Boo Boo~</span>
+                                </div>
+                                <div class="p-3 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-2xl font-bold text-tealPrimary block">تُ و</span>
+                                    <span class="text-xs text-gray-500">Too Too~</span>
+                                </div>
+                                <div class="p-3 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-2xl font-bold text-tealPrimary block">ثُ و</span>
+                                    <span class="text-xs text-gray-500">Thoo Thoo~</span>
+                                </div>
+                                <div class="p-3 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-2xl font-bold text-tealPrimary block">جُ و</span>
+                                    <span class="text-xs text-gray-500">Joo Joo~</span>
+                                </div>
+                                <div class="p-3 bg-cream rounded-xl border border-gray-200">
+                                    <span class="arabic-text text-2xl font-bold text-tealPrimary block">حُ و</span>
+                                    <span class="text-xs text-gray-500">Hoo Hoo~</span>
+                                </div>
+                            </div>
+                            <div class="text-center text-xs text-gray-500 font-medium bg-gray-50 p-2 rounded-lg">
+                                Transliteration guides young learners to stretch long vowels correctly.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Advanced Reading: Lesson 13 Words to Read",
+                    subtitle: "Words to Read (كلمات للقراءة) - Page 99 & 100",
+                    render: `
+                        <div class="h-full flex flex-col justify-between">
+                            <div class="flex justify-between items-center border-b pb-2">
+                                <span class="arabic-text text-xl font-bold text-tealPrimary">الدرس الثالث عشر {13} Lesson</span>
+                                <span class="text-xs font-bold bg-goldAccent/20 text-goldHover px-2 py-0.5 rounded">Page 99</span>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2 text-center my-3 arabic-text text-lg">
+                                <div class="p-2 bg-cream rounded border">لَيَبْطِئَنَّ</div>
+                                <div class="p-2 bg-cream rounded border">لَيُنْبَذَنَّ</div>
+                                <div class="p-2 bg-cream rounded border">غَاشِيَةٌ</div>
+                                <div class="p-2 bg-cream rounded border">يَأْسَفَى</div>
+                                <div class="p-2 bg-cream rounded border">أَتَعِدَانِنِي</div>
+                                <div class="p-2 bg-cream rounded border">يَتْرُكُكُمْ</div>
+                                <div class="p-2 bg-cream rounded border">خَطِئِينَ</div>
+                                <div class="p-2 bg-cream rounded border">أَعَنَكَ</div>
+                            </div>
+                            <div class="bg-tealPrimary/5 p-3 rounded-xl border border-tealPrimary/20 text-xs text-tealDark">
+                                Complete Quranic word combinations for fluent recitation.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Reference Page: Asma-ul-Husna & Prophets",
+                    subtitle: "Names of Allah & Quranic Messengers - Page 109 & 110",
+                    render: `
+                        <div class="h-full flex flex-col justify-between">
+                            <div class="text-center border-b pb-2">
+                                <h4 class="arabic-text text-xl font-bold text-goldHover">وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا</h4>
+                                <p class="text-[11px] text-gray-500">And to Allah belong the Most Beautiful Names</p>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2 text-center my-3 arabic-text text-sm">
+                                <div class="p-1.5 bg-cream rounded border"><span class="font-bold text-tealPrimary">الرَّحْمَنُ</span><br><span class="text-[9px] text-gray-500">AR-RAHMAAN</span></div>
+                                <div class="p-1.5 bg-cream rounded border"><span class="font-bold text-tealPrimary">الرَّحِيمُ</span><br><span class="text-[9px] text-gray-500">AR-RAHEEM</span></div>
+                                <div class="p-1.5 bg-cream rounded border"><span class="font-bold text-tealPrimary">الْمَلِكُ</span><br><span class="text-[9px] text-gray-500">AL-MALIK</span></div>
+                                <div class="p-1.5 bg-cream rounded border"><span class="font-bold text-tealPrimary">الْقُدُّوسُ</span><br><span class="text-[9px] text-gray-500">AL-QUDDUS</span></div>
+                            </div>
+                            <div class="text-center border-t pt-2">
+                                <h5 class="arabic-text text-base font-bold text-tealDark">أَنْبِيَاءُ وَرُسُلٌ فِي الْقُرْآنِ الْكَرِيمِ</h5>
+                                <div class="flex justify-around arabic-text text-sm mt-1 text-gray-700">
+                                    <span>آدَمُ</span> <span>إِدْرِيسُ</span> <span>نُوحٌ</span> <span>إِبْرَاهِيمُ</span> <span>مُحَمَّدٌ</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            ]
+        };
+
+        // CATALOG PRODUCTS DATA
+        const productsData = {
+            book1: { id: 'book1', title: 'Huroof Book 1', price: 13.99 },
+            book2: { id: 'book2', title: 'Huroof Book 2', price: 13.99 },
+            bundle: { id: 'bundle', title: 'Huroof Complete Set (Book 1 + 2)', price: 25.99 }
+        };
+
+        // BOOK PREVIEW MODAL FUNCTIONS
+        function openBookPreview(bookKey) {
+            currentBookPreview = bookKey;
+            currentPageIndex = 0;
+            document.getElementById('modalBookTitle').innerText = bookKey === 'book1' ? 'Huroof Book 1 (Sanaabil 1) Sample Preview' : 'Huroof Book 2 (Sanaabil 2) Sample Preview';
+            document.getElementById('bookPreviewModal').classList.remove('hidden');
+            renderPageContent();
+        }
+
+        function closeBookPreview() {
+            document.getElementById('bookPreviewModal').classList.add('hidden');
+        }
+
+        function renderPageContent() {
+            const pages = bookPreviews[currentBookPreview];
+            const pageData = pages[currentPageIndex];
+            
+            document.getElementById('pageIndicator').innerText = `Page ${currentPageIndex + 1} of ${pages.length}`;
+            
+            const displayArea = document.getElementById('pageDisplayArea');
+            displayArea.innerHTML = `
+                <div>
+                    <h4 class="text-lg font-bold text-gray-900">${pageData.title}</h4>
+                    <p class="text-xs text-tealPrimary font-medium mb-4">${pageData.subtitle}</p>
+                </div>
+                <div class="flex-grow py-2">${pageData.render}</div>
+            `;
+        }
+
+        function nextPage() {
+            const totalPages = bookPreviews[currentBookPreview].length;
+            if (currentPageIndex < totalPages - 1) {
+                currentPageIndex++;
+                renderPageContent();
+            }
+        }
+
+        function prevPage() {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                renderPageContent();
+            }
+        }
+
+        function addToCartFromModal() {
+            addToCart(currentBookPreview);
+            closeBookPreview();
+        }
+
+        // CART MANAGEMENT FUNCTIONS
+        function addToCart(productId) {
+            const item = productsData[productId];
+            if (!item) return;
+
+            const existingIndex = cart.findIndex(c => c.id === productId);
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+
+            updateCartUI();
+            showNotification(`Added ${item.title} to basket!`);
+        }
+
+        function updateCartQty(productId, delta) {
+            const index = cart.findIndex(c => c.id === productId);
+            if (index > -1) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartBadge = document.getElementById('cartBadge');
+            const cartTotalHeader = document.getElementById('cartTotalHeader');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const wishlistCount = document.getElementById('wishlistCount');
+
+            let totalQty = 0;
+            let subtotal = 0;
+
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-basket-shopping text-5xl mb-3 opacity-30"></i>
+                        <p class="text-sm font-semibold">Your basket is empty</p>
+                        <p class="text-xs mt-1">Explore our books to add items.</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach(item => {
+                    totalQty += item.qty;
+                    const itemTotal = item.price * item.qty;
+                    subtotal += itemTotal;
+
+                    const cartItemEl = document.createElement('div');
+                    cartItemEl.className = 'flex items-center justify-between p-3 bg-cream/60 rounded-xl border border-gray-200';
+                    cartItemEl.innerHTML = `
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-gray-800">${item.title}</h4>
+                            <span class="text-xs text-tealPrimary font-semibold">£${item.price.toFixed(2)} each</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center border border-gray-300 rounded-full bg-white px-2 py-0.5">
+                                <button onclick="updateCartQty('${item.id}', -1)" class="text-xs font-bold text-gray-500 hover:text-tealPrimary px-1.5">-</button>
+                                <span class="text-xs font-bold px-2">${item.qty}</span>
+                                <button onclick="updateCartQty('${item.id}', 1)" class="text-xs font-bold text-gray-500 hover:text-tealPrimary px-1.5">+</button>
+                            </div>
+                            <span class="text-sm font-bold text-gray-900 w-16 text-right">£${itemTotal.toFixed(2)}</span>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItemEl);
+                });
+            }
+
+            cartBadge.innerText = totalQty;
+            cartTotalHeader.innerText = `£${subtotal.toFixed(2)}`;
+            cartSubtotal.innerText = `£${subtotal.toFixed(2)}`;
+
+            // Shipping Bar update (£30 threshold)
+            const shippingBar = document.getElementById('shippingBar');
+            const shippingText = document.getElementById('shippingText');
+            const freeThreshold = 30.0;
+            if (subtotal >= freeThreshold) {
+                shippingBar.style.width = '100%';
+                shippingBar.classList.add('bg-goldAccent');
+                shippingText.innerHTML = `<span class="text-tealPrimary font-bold">🎉 You qualify for FREE UK Shipping!</span>`;
+            } else {
+                const percent = Math.min(100, (subtotal / freeThreshold) * 100);
+                shippingBar.style.width = `${percent}%`;
+                shippingBar.classList.remove('bg-goldAccent');
+                const diff = (freeThreshold - subtotal).toFixed(2);
+                shippingText.innerHTML = `<span>Free UK Shipping Progress</span> <span>Add £${diff} more</span>`;
+            }
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cartDrawer');
+            if (open) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // SEARCH FILTER FUNCTIONALITY
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // TOAST NOTIFICATION
+        function showNotification(msg) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.innerText = msg;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your basket is empty!');
+                return;
+            }
+            showNotification('Redirecting to Secure Payment Gateway...');
+        }
+
+        // Initialize UI on load
+        window.onload = function() {
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
