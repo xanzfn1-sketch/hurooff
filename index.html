@@ -598,7 +598,10 @@ function payWithStripe(email){
   if (lines.length > 1){ toast(t('pay_one')); return; }
   const link = STRIPE.links[lines[0].p.id];
   if (!link){ toast(t('pay_unavailable')); return; }
-  location.href = link + (email ? '?prefilled_email=' + encodeURIComponent(email) : '');
+  const url = link + (email ? '?prefilled_email=' + encodeURIComponent(email) : '');
+  const w = window.open(url, '_blank', 'noopener');
+  if (!w){ location.href = url; return; }
+  toast(t('pay_opened'));
 }
 function viewPaid(){
   basket = {}; saveBasket();
@@ -691,9 +694,9 @@ en:{
  schools_eyebrow:'Schools, tutors & madrasas', schools_t:'Class sets for your learners',
  schools_d:'Order Sanabil books in bulk for classrooms, weekend schools and tutoring groups. Tell us how many learners you have and we’ll reply with pricing and delivery.',
  schools_b1:'Bulk pricing on request', schools_b2:'Mix Sunbula 1 and Sunbula 2 in one order', schools_b3:'Teacher bundles coming later', schools_btn:'Make a bulk enquiry',
- hear:'Hear it again', save:'Save', pay_one:'Please check out one item at a time, or choose the Set to buy both books.', pay_unavailable:'Online payment is being switched on. Please email us to order in the meantime.', paid_t:'Thank you for your order', paid_d:'Your payment went through. Stripe will email your receipt, and we will send your books soon.', free_eyebrow:'Learn', free_t:'Arabic Alphabet', free_d2:'Tap a letter to hear it and see its shapes at the start, middle and end of a word',
+ hear:'Hear it again', save:'Save', pay_opened:'Secure payment opened in a new tab.', set_merged:'Book 1 + Book 2 have been combined into the Set.', pay_one:'Please check out one item at a time, or choose the Set to buy both books.', pay_unavailable:'Online payment is being switched on. Please email us to order in the meantime.', paid_t:'Thank you for your order', paid_d:'Your payment went through. Stripe will email your receipt, and we will send your books soon.', free_eyebrow:'Learn', free_t:'Arabic Alphabet', free_d2:'Tap a letter to hear it and see its shapes at the start, middle and end of a word',
  f_isolated:'Alone', f_initial:'Start', f_medial:'Middle', f_final:'End', nonjoin:'This letter does not join to the letter after it.',
- i1_t:'UK delivery', i1_d:'Postage shown before you pay', i2_t:'Secure checkout', i2_d:'Card payments at launch', i3_t:'QR video lessons', i3_d:'Included in the Sanabil books', i4_t:'Schools & madrasas', i4_d:'Bulk orders welcome', i5_t:'Arabic alphabet', i5_d:'Tap a letter to hear it',
+ i1_t:'UK delivery', i1_d:'Postage shown before you pay', i2_t:'Secure checkout', i2_d:'Card payments by Stripe', i3_t:'QR video lessons', i3_d:'Included in the Sanabil books', i4_t:'Schools & madrasas', i4_d:'Bulk orders welcome', i5_t:'Arabic alphabet', i5_d:'Tap a letter to hear it',
  f_about:'Arabic learning books and resources for children, families, schools and madrasas.', f_shop:'Shop', f_help:'Help', f_delivery:'Delivery', f_returns:'Returns', f_privacy:'Privacy',
  f_credit:'Sanabil Sunbula books are written by Saaliha Al-Shaikh and published by Dar Al-Zaman.',
  shop_eyebrow:'Shop', shop_t:'All products', shop_books_t:'Arabic Books', shop_packs_t:'Learning Packs & Bundles',
@@ -706,11 +709,11 @@ en:{
  co_eyebrow:'Checkout', co_t:'Delivery and payment', co_details:'Your details', co_address:'Delivery address',
  fl_name:'Full name', fl_email:'Email', fl_phone:'Phone (optional)', fl_addr1:'Address', fl_addr2:'Address line 2 (optional)', fl_city:'Town or city', fl_post:'Postcode', fl_country:'Country', uk:'United Kingdom', intl:'Another country',
  intl_note:'For delivery outside the UK, please contact us for a postage quote before ordering.',
- co_payment:'Payment', pay_note:'Card payment connects here at launch. This preview takes no payment.', place:'Place test order', summary:'Order summary', co_empty:'Your basket is empty, so there is nothing to check out yet.',
- ok_t:'Test order received', ok_d:'No payment was taken and no email was sent. At launch, customers see this page and also receive a confirmation email.', order_ref:'Order reference', ok_home:'Back to the shop',
+ co_payment:'Payment', pay_note:'You will pay by card on the next page. Stripe handles your payment securely.', place:'Pay securely with Stripe', summary:'Order summary', co_empty:'Your basket is empty, so there is nothing to check out yet.',
+ ok_t:'Order received', ok_d:'Thank you for your order.', order_ref:'Order reference', ok_home:'Back to the shop',
  sch_eyebrow:'Schools, tutors & madrasas', sch_t:'Bulk orders for classrooms', sch_d:'Tell us about your setting and how many copies you need. We’ll reply with pricing and delivery options.',
  sch_form:'Bulk order enquiry', fl_org:'School or organisation', fl_type:'Type', t_school:'School', t_madrasa:'Madrasa or weekend school', t_tutor:'Tutor', t_other:'Other', fl_contact:'Your name', fl_q1:'Copies of Sunbula 1', fl_q2:'Copies of Sunbula 2', fl_msg:'Anything else we should know?', send:'Send enquiry',
- sent_note:'Thanks. This preview isn’t connected to email yet, so nothing was sent. At launch this form goes straight to Sanabil.',
+ sent_note:'Thanks. We could not send your message from this page. Please email contactsanabil.co@gmail.com.',
  sch_s1_t:'Class sets', sch_s1_d:'Order the same book for a whole class, or mix both books.', sch_s2_t:'Bulk pricing on request', sch_s2_d:'Pricing depends on quantity. Ask and we’ll send a quote.', sch_s3_t:'Teacher bundles later', sch_s3_d:'Classroom resources and teacher packs will be added over time.',
  about_eyebrow:'About', about_t:'About Sanabil',
  about_p1:'Sanabil means “ears of grain”. Like a seed that grows into a full ear of wheat, every letter a child learns is a small step that grows into reading, understanding and confidence.',
@@ -747,9 +750,9 @@ ar:{
  schools_eyebrow:'المدارس والمعلمون والمعاهد', schools_t:'مجموعات صفية لطلابكم',
  schools_d:'اطلبوا كتب سنابل بالجملة للفصول والمدارس الأسبوعية ومجموعات التدريس. أخبرونا بعدد الطلاب وسنرد بالأسعار وخيارات التوصيل.',
  schools_b1:'أسعار الجملة عند الطلب', schools_b2:'اجمعوا سنبلة ١ وسنبلة ٢ في طلب واحد', schools_b3:'حزم للمعلمين لاحقًا', schools_btn:'أرسل استفسار جملة',
- hear:'اسمعه مرة أخرى', save:'وفّر', pay_one:'يرجى إتمام الشراء لمنتج واحد في كل مرة، أو اختيار المجموعة لشراء الكتابين.', pay_unavailable:'الدفع الإلكتروني قيد التفعيل. يرجى مراسلتنا للطلب في الوقت الحالي.', paid_t:'شكرًا على طلبك', paid_d:'تمت عملية الدفع. سترسل Stripe إيصالك بالبريد الإلكتروني وسنرسل كتبك قريبًا.', free_eyebrow:'تعلّم', free_t:'الحروف العربية', free_d2:'اضغط على حرف لتسمعه وترى أشكاله في أول الكلمة ووسطها وآخرها',
+ hear:'اسمعه مرة أخرى', save:'وفّر', pay_opened:'تم فتح صفحة الدفع الآمن في تبويب جديد.', set_merged:'تم دمج الكتابين في المجموعة.', pay_one:'يرجى إتمام الشراء لمنتج واحد في كل مرة، أو اختيار المجموعة لشراء الكتابين.', pay_unavailable:'الدفع الإلكتروني قيد التفعيل. يرجى مراسلتنا للطلب في الوقت الحالي.', paid_t:'شكرًا على طلبك', paid_d:'تمت عملية الدفع. سترسل Stripe إيصالك بالبريد الإلكتروني وسنرسل كتبك قريبًا.', free_eyebrow:'تعلّم', free_t:'الحروف العربية', free_d2:'اضغط على حرف لتسمعه وترى أشكاله في أول الكلمة ووسطها وآخرها',
  f_isolated:'منفصل', f_initial:'أول', f_medial:'وسط', f_final:'آخر', nonjoin:'هذا الحرف لا يتصل بالحرف الذي بعده.',
- i1_t:'توصيل داخل بريطانيا', i1_d:'تظهر أجور الشحن قبل الدفع', i2_t:'دفع آمن', i2_d:'الدفع بالبطاقة عند الإطلاق', i3_t:'دروس فيديو QR', i3_d:'مضمّنة في كتب سنابل', i4_t:'المدارس والمعاهد', i4_d:'نرحّب بطلبات الجملة', i5_t:'الحروف العربية', i5_d:'اضغط على حرف لتسمعه',
+ i1_t:'توصيل داخل بريطانيا', i1_d:'تظهر أجور الشحن قبل الدفع', i2_t:'دفع آمن', i2_d:'الدفع بالبطاقة عبر Stripe', i3_t:'دروس فيديو QR', i3_d:'مضمّنة في كتب سنابل', i4_t:'المدارس والمعاهد', i4_d:'نرحّب بطلبات الجملة', i5_t:'الحروف العربية', i5_d:'اضغط على حرف لتسمعه',
  f_about:'كتب ومصادر لتعليم العربية للأطفال والأسر والمدارس والمعاهد.', f_shop:'المتجر', f_help:'المساعدة', f_delivery:'التوصيل', f_returns:'الاسترجاع', f_privacy:'الخصوصية',
  f_credit:'كتب سنابل (سنبلة) من تأليف أ. صالحة الشيخ ونشر دار الزمان للنشر والتوزيع.',
  shop_eyebrow:'المتجر', shop_t:'كل المنتجات', shop_books_t:'كتب عربية', shop_packs_t:'حزم ومجموعات تعليمية',
@@ -762,11 +765,11 @@ ar:{
  co_eyebrow:'إتمام الطلب', co_t:'التوصيل والدفع', co_details:'بياناتك', co_address:'عنوان التوصيل',
  fl_name:'الاسم الكامل', fl_email:'البريد الإلكتروني', fl_phone:'الهاتف (اختياري)', fl_addr1:'العنوان', fl_addr2:'العنوان، السطر الثاني (اختياري)', fl_city:'المدينة', fl_post:'الرمز البريدي', fl_country:'الدولة', uk:'المملكة المتحدة', intl:'دولة أخرى',
  intl_note:'للتوصيل خارج المملكة المتحدة، تواصل معنا للحصول على سعر الشحن قبل الطلب.',
- co_payment:'الدفع', pay_note:'سيتم ربط الدفع بالبطاقة هنا عند الإطلاق. هذه النسخة التجريبية لا تأخذ أي مبلغ.', place:'إرسال طلب تجريبي', summary:'ملخص الطلب', co_empty:'سلتك فارغة، فلا يوجد ما يمكن إتمامه بعد.',
- ok_t:'تم استلام الطلب التجريبي', ok_d:'لم يُؤخذ أي مبلغ ولم يُرسل أي بريد. عند الإطلاق يرى العميل هذه الصفحة ويستلم رسالة تأكيد بالبريد.', order_ref:'رقم الطلب', ok_home:'العودة إلى المتجر',
+ co_payment:'الدفع', pay_note:'ستدفع بالبطاقة في الصفحة التالية. تتولى Stripe معالجة الدفع بأمان.', place:'الدفع الآمن عبر Stripe', summary:'ملخص الطلب', co_empty:'سلتك فارغة، فلا يوجد ما يمكن إتمامه بعد.',
+ ok_t:'تم استلام الطلب', ok_d:'شكرًا على طلبك.', order_ref:'رقم الطلب', ok_home:'العودة إلى المتجر',
  sch_eyebrow:'المدارس والمعلمون والمعاهد', sch_t:'طلبات الجملة للفصول', sch_d:'أخبرونا عن مؤسستكم وعدد النسخ التي تحتاجونها، وسنرد بالأسعار وخيارات التوصيل.',
  sch_form:'استفسار طلب جملة', fl_org:'المدرسة أو المؤسسة', fl_type:'النوع', t_school:'مدرسة', t_madrasa:'معهد أو مدرسة نهاية الأسبوع', t_tutor:'معلم خاص', t_other:'أخرى', fl_contact:'اسمك', fl_q1:'عدد نسخ سنبلة ١', fl_q2:'عدد نسخ سنبلة ٢', fl_msg:'هل هناك ما تودّون إخبارنا به؟', send:'إرسال الاستفسار',
- sent_note:'شكرًا لك. هذه النسخة التجريبية غير مربوطة بالبريد بعد، لذلك لم يُرسل شيء. عند الإطلاق يصل هذا النموذج مباشرة إلى سنابل.',
+ sent_note:'شكرًا لك. تعذّر إرسال رسالتك من هذه الصفحة. يرجى مراسلتنا على contactsanabil.co@gmail.com.',
  sch_s1_t:'مجموعات للفصول', sch_s1_d:'اطلبوا الكتاب نفسه لفصل كامل، أو اجمعوا الكتابين.', sch_s2_t:'أسعار الجملة عند الطلب', sch_s2_d:'يعتمد السعر على الكمية. اسألوا وسنرسل عرض سعر.', sch_s3_t:'حزم المعلمين لاحقًا', sch_s3_d:'ستُضاف موارد للفصول وحزم للمعلمين تدريجيًا.',
  about_eyebrow:'من نحن', about_t:'عن سنابل',
  about_p1:'«سنابل» جمع سنبلة. وكما تنمو البذرة لتصبح سنبلة ممتلئة، فكل حرف يتعلمه الطفل خطوة صغيرة تنمو إلى قراءة وفهم وثقة.',
@@ -810,7 +813,16 @@ function postage(){
   if (books === 0) return 0;
   return SETTINGS.postageByBooks[books] ?? SETTINGS.postageMoreBooks;
 }
-function saveBasket(){ store.set('sanabil-basket', basket); updateCount(); }
+function mergeSet(){
+  const m = Math.min(basket['book-1'] || 0, basket['book-2'] || 0);
+  if (m < 1) return false;
+  basket['book-1'] -= m; basket['book-2'] -= m;
+  if (!basket['book-1']) delete basket['book-1'];
+  if (!basket['book-2']) delete basket['book-2'];
+  basket['sanabil-set'] = (basket['sanabil-set'] || 0) + m;
+  return true;
+}
+function saveBasket(){ const merged = mergeSet(); store.set('sanabil-basket', basket); updateCount(); if (merged) setTimeout(() => toast(t('set_merged')), 0); }
 function addToBasket(id, qty=1){
   basket[id] = (basket[id] || 0) + qty; saveBasket();
   const c = $('#count'); c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
